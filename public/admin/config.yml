@@ -1,0 +1,95 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+# Keeps filenames clean and safe
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  # ===========================================================
+  # 1. DISTRICTS
+  # ===========================================================
+  - name: "districts"
+    label: "Districts"
+    folder: "src/data/districts"
+    create: true
+    slug: "{{id}}"
+    summary: "{{id}} | {{name}} ({{status}})"
+    sortable_fields: ["id", "status", "name"]
+    fields:
+      - {label: "District Name", name: "name", widget: "string"}
+      
+      # SAFE & STRICT PATTERN
+      # This allows ONLY: a-z, A-Z, 0-9, dashes (-), and underscores (_)
+      # It creates an error if you try to use spaces or emojis.
+      - label: "Unique ID"
+        name: "id"
+        widget: "string"
+        pattern: ['^[a-zA-Z0-9-_]+$', "Invalid Format! Use only letters, numbers, and dashes (e.g. OD-01). No spaces allowed."]
+        hint: "This will be the URL. Example: OD-01"
+      
+      - {label: "State", name: "state", widget: "string", default: "Odisha"}
+      - {label: "Status", name: "status", widget: "select", options: ["visited", "milestone", "transit","planned"], default: "visited"}
+      - {label: "Coordinates", name: "coordinates", widget: "string", hint: "Format: 20.296, 85.824"}
+      
+      # Stats
+      - {label: "Days Spent", name: "days_spent", widget: "number", default: 0, required: false}
+      - {label: "Distance (km)", name: "distance_km", widget: "number", default: 0, required: false}
+      
+      # Content
+      - {label: "Short Description", name: "description", widget: "text"}
+      - {label: "Cover Image", name: "image", widget: "image"}
+      - {label: "Full Story", name: "body", widget: "markdown", required: false}
+      
+      # Extras
+      - {label: "Quote Text", name: "quote_text", widget: "string", required: false}
+      - {label: "Quote Author", name: "quote_author", widget: "string", default: "Ryo", required: false}
+
+  # ===========================================================
+  # 2. TIMELINE EVENTS
+  # ===========================================================
+  - name: "timeline"
+    label: "Timeline Events"
+    folder: "src/data/timeline"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{id}}"
+    summary: "{{date}} | {{title}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - {label: "Event Title", name: "title", widget: "string"}
+      
+      # SAFE & STRICT PATTERN
+      - label: "Event ID"
+        name: "id"
+        widget: "string"
+        pattern: ['^[a-zA-Z0-9-_]+$', "Invalid Format! Use only letters, numbers, and dashes (e.g. first-ride). No spaces allowed."]
+        hint: "Short ID for filename (e.g. genesis, first-ride)"
+        
+      - {label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false}
+      - {label: "Location Name", name: "location", widget: "string"}
+      - {label: "Map Coordinates", name: "coordinates", widget: "string", required: false, hint: "Lat, Lng"}
+      - {label: "Short Description", name: "description", widget: "text"}
+      - {label: "Main Image", name: "image", widget: "image", required: false}
+      - {label: "Full Story", name: "body", widget: "markdown", required: false}
+
+  # ===========================================================
+  # 3. GALLERY
+  # ===========================================================
+  - name: "gallery"
+    label: "Gallery"
+    folder: "src/data/gallery"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    summary: "{{date}} | {{caption}}"
+    fields:
+      - {label: "Caption", name: "caption", widget: "string"}
+      - {label: "Photo", name: "image", widget: "image"}
+      - {label: "Date Taken", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false}
+      - {label: "Location", name: "location", widget: "string"}
+      - {label: "Media Type", name: "type", widget: "select", options: ["image", "video"], default: "image"}

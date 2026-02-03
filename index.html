@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIFAR | The Infinite Journey</title>
+    <meta name="description" content="Starting from Zero. 806 Districts. 12 Years. A documentation of the raw reality of Bharat." />
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mr-explorer.netlify.app/" />
+    <meta property="og:title" content="SIFAR | The Infinite Journey" />
+    <meta property="og:description" content="Starting from Zero. 806 Districts. 12 Years. One Soul." />
+    <meta property="og:image" content="/images/uploads/realms-odyssey.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SIFAR | The Infinite Journey" />
+    <meta name="twitter:description" content="Starting from Zero. 806 Districts. 12 Years." />
+    <meta name="twitter:image" content="/images/uploads/realms-odyssey.jpg" />
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              sifar: {
+                black: 'var(--bg-primary)',
+                dark: 'var(--bg-secondary)',
+                gold: 'var(--accent-primary)',
+                goldDim: 'var(--accent-secondary)',
+                gray: 'var(--bg-tertiary)',
+                text: 'var(--text-primary)',
+                muted: 'var(--text-secondary)',
+                border: 'var(--border-color)'
+              }
+            },
+            fontFamily: {
+              cinzel: ['Cinzel', 'serif'],
+              inter: ['Inter', 'sans-serif'],
+            },
+            animation: {
+              'fade-in-up': 'fadeInUp 1s ease-out forwards',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'typewriter': 'typing 3.5s steps(40, end), blink-caret .75s step-end infinite',
+            },
+            keyframes: {
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              typing: {
+                'from': { width: '0' },
+                'to': { width: '100%' }
+              },
+              'blink-caret': {
+                'from, to': { borderColor: 'transparent' },
+                '50%': { borderColor: 'var(--accent-primary)' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <style>
+      /* THEME VARIABLES */
+      :root {
+        /* Default Dark (Cinematic) */
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #121212;
+        --bg-tertiary: #2d2d2d;
+        --text-primary: #e8e8e8;
+        --text-secondary: #a8a8a8;
+        --accent-primary: #f4c430; /* Gold */
+        --accent-secondary: #d4a430;
+        --border-color: rgba(244, 196, 48, 0.2);
+      }
+
+      body.light-mode {
+        /* Light (Journal/Paper) */
+        --bg-primary: #fdfbf7; /* Creamy paper */
+        --bg-secondary: #f3f0e8;
+        --bg-tertiary: #e2e2e2;
+        --text-primary: #1a1a1a; /* Charcoal */
+        --text-secondary: #5a5a5a;
+        --accent-primary: #d97706; /* Burnt Orange/Ink */
+        --accent-secondary: #b45309;
+        --border-color: rgba(217, 119, 6, 0.2);
+      }
+
+      /* Transitions */
+      body {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color 0.5s ease, color 0.5s ease;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-primary);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--bg-tertiary);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-primary);
+      }
+
+      /* Map specific overrides */
+      .leaflet-popup-content-wrapper {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        border: 1px solid var(--accent-primary);
+        border-radius: 4px;
+      }
+      .leaflet-popup-tip {
+        background: var(--accent-primary);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.10.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "recharts": "https://aistudiocdn.com/recharts@^3.5.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
